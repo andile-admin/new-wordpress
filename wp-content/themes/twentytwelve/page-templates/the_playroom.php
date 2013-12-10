@@ -507,44 +507,52 @@
 			
 
 		<div class="playroom_carousel">
-			<div class="slider-wrapper theme-default">
-			<div id="slider" class="nivoSlider">
-			<?php
-				$thumbnail_ID = get_post_thumbnail_id();
-			 
-								     $images = get_children( array('post_parent' => $post_id, 'post_status' => 'published', 'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => 'DEC', 'orderby' => 'menu_order ID','posts_per_page' => 2) );
-								 
-								     if ($images) :
-								 
-								         foreach ($images as $attachment_id => $image) :
-								 
-								         if ( $image->ID != $thumbnail_ID ) :
-								 
-								             $img_alt = get_post_meta($attachment_id, '_wp_attachment_image_alt', true); //alt
-								             if ($img_alt == '') : $img_alt = $image->post_title; endif;
-								 
-								             $big_array = image_downsize( $image->ID, 'large' );
-								             $img_url = $big_array[0];
-								 			 		// echo '<ul>';
-								             		 //echo '<li>';
-										            // echo '<div class="item">';
-										             echo '<img src="';
-										             echo $img_url;
-										             echo '" alt="';
-										             echo $img_alt;  
-										             echo '" data-thumb="';
-										             echo $img_url;
-										             echo '" title="';
-										            // echo get_post_meta($post->ID, 'custom_text_game_name', true);
-										             //echo $img_title;
-										             echo '" />';
-										             //echo '</div>';
-										             //echo '</li>';
-										            // echo '</ul>';
-								 				
-								     endif; endforeach; endif; 
-				?>
-			
+			<!--<div class="slider-wrapper theme-default">
+			<div id="slider" class="nivoSlider">-->
+			<div class="the_carousel">
+				<div id="home-carousel-container">
+					
+					<ul class="carousel-container">
+						<li class="carousel-img-container">
+						<?php
+							$count = 0;
+							$thumbnail_ID = get_post_thumbnail_id();
+						 
+											     $images = get_children( array('class'=>'read_more','post_parent' => $post_id, 'post_status' => 'published', 'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => 'DEC', 'orderby' => 'menu_order ID','posts_per_page' => 12) );
+											 
+											     if ($images) :
+											 
+											         foreach ($images as $attachment_id => $image) :
+											 
+											         if ( $image->ID != $thumbnail_ID ) :
+											 
+											             $img_alt = get_post_meta($attachment_id, '_wp_attachment_image_alt', true); //alt
+											             if ($img_alt == '') : $img_alt = $image->post_title; endif;
+											 
+											             $big_array = image_downsize( $image->ID, 'large' );
+											             $img_url = $big_array[0];
+											 			 		// echo '<ul>';
+											             		 //echo '<li>';
+													            // echo '<div class="item">';
+ 																echo '<a title="" href="#" class="read_more" id="r' . $count .'" reviewnum="' . $count . '">';
+													            echo '<img src="';
+													            echo $img_url;
+													            echo '" alt="';
+													            echo $img_alt;  
+													            //echo '" data-thumb="';
+													            //echo $img_url;
+													            echo '" title="';
+													            // echo get_post_meta($post->ID, 'custom_text_game_name', true);
+													            //echo $img_title;
+													            echo '" />';
+													            echo '</a>';
+													            //echo '</div>';
+													            //echo '</li>';
+													            // echo '</ul>';
+											 					$count++;		
+											     endif; endforeach; endif; 
+							?>
+						
              <!--   <img src="images/toystory.jpg" data-thumb="images/toystory.jpg" alt="" />
                 <a href="http://dev7studios.com"><img src="images/up.jpg" data-thumb="images/up.jpg" alt="" title="This is an example of a caption" /></a>
                 <img src="images/walle.jpg" data-thumb="images/walle.jpg" alt="" data-transition="slideInLeft" />
@@ -553,9 +561,12 @@
 
 
 
-            </div>
-        </div>
+           <!-- </div>
+        </div>-->
 			<!--<img src="<?php //echo get_post_meta($post->ID, 'custom_movie_image', true);   ?>" />-->		
+			<div id="carousel-indicator"><div>
+			</li></ul></div></div>
+
 		</div> <!--  end playroom_carousel -->
 
 		
@@ -566,7 +577,7 @@
 					
 					<div class="simple-cycle">
         				<div class="arrow arrow-left"></div>
-        					<div class="flow-slider">-->
+        					<div class="flow-slider">
 								<?php
 									$thumbnail_ID = get_post_thumbnail_id();
 			 
@@ -685,7 +696,12 @@
 	<!--<script src="<?php //echo get_bloginfo('template_directory');?>/js/jquery.thumbnailScroller.js"></script>
 	<script src="<?php //echo get_bloginfo('template_directory');?>/js/jquery-ui-1.8.13.custom.min.js"></script>-->
 	<script src="<?php echo get_bloginfo('template_directory');?>/js/flowslider.jquery.js"></script> <!--For the thumbnail slider-->
-	<script src="<?php echo get_bloginfo('template_directory');?>/js/jquery.nivo.slider.js"></script> <!--For the playroom carousel slider-->
+	<!--<script src="<?php //echo get_bloginfo('template_directory');?>/js/jquery.nivo.slider.js"></script> --><!--For the playroom carousel slider-->
+	
+	<!--<script src="<?php// echo get_bloginfo('template_directory');?>/js/main.js"></script>--> <!--For the playroom carousel slider-->
+
+	<script src="<?php echo get_bloginfo('template_directory');?>/js/jquery.jcarousel.min.js"></script> <!--For the playroom carousel slider-->
+
 	<script>
 $(document).ready(function(){
 	$(".review_game_info div").hide();
@@ -820,11 +836,24 @@ $(document).ready(function(){
         });
     </script>
 
-    <script type="text/javascript">
+    <script>
+    $(document).ready(function(){
+ 		$(".carousel-img-container img").hover(function(){
+            clearTimeout(timer);     
+        },
+        function(){
+            timer = setTimeout(carousel_action, 2000,[item_count, (carousel_count+1)]);
+
+        });
+	});
+
+	</script>
+
+   <!-- <script type="text/javascript">
     $(window).load(function() {
         $('#slider').nivoSlider();
     });
     </script>
-
+ -->
 
 <?php get_footer(); ?>

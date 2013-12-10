@@ -24,6 +24,12 @@
 <title><?php wp_title( '|', true, 'right' ); ?></title>
 <link rel="profile" href="http://gmpg.org/xfn/11" />
 <link href="<?php echo get_bloginfo('template_directory');?>/css/jquery.thumbnailScroller.css" rel="stylesheet" />
+
+<link href="<?php echo get_bloginfo('template_directory');?>/css/jcarousel.css" rel="stylesheet" />
+
+<link href="<?php echo get_bloginfo('template_directory');?>/css/main.css" rel="stylesheet" />
+
+
 <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
 <?php // Loads HTML5 JavaScript file to add support for HTML5 elements in older IE versions. ?>
 <!--[if lt IE 9]>
